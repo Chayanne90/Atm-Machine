@@ -8,29 +8,10 @@ import java.sql.Statement;
 public class Bank {
 
 
-    private boolean validateUser;
     private String card_num;
     private String card_pin;
 
-
-    /* Getters */
-    public void setValidateUser(boolean validateUser) {
-        this.validateUser = validateUser;
-    }
-
-    public void setCard_num(String card_num) {
-        this.card_num = card_num;
-    }
-
-    public void setCard_pin(String card_pin) {
-        this.card_pin = card_pin;
-    }
-
-    public boolean isValidateUser() {
-        return validateUser;
-    }
-
-    /* Setters */
+    // Getters
     public String getCard_num() {
         return card_num;
     }
@@ -39,6 +20,14 @@ public class Bank {
         return card_pin;
     }
 
+    // Setters
+    public void setCard_num(String card_num) {
+        this.card_num = card_num;
+    }
+
+    public void setCard_pin(String card_pin) {
+        this.card_pin = card_pin;
+    }
 
     /* Constructor */
     public Bank(String card_num, String card_pin) {
@@ -48,7 +37,7 @@ public class Bank {
     }
 
 
-    //Each method will be connecting the the DB to verifiy the card  and get user account info
+    //Each method will be connecting the the DB to verifiy the card and user account info
 
     /* Inserting data to DB this method is just for easy data entry!
     be wrap in a group comment for when the application is running
@@ -83,42 +72,52 @@ public class Bank {
     }*/
 
 
-    public static Boolean validateCard(String card_num) {
+    public static Boolean validateCard(String card_num, String card_pin) {
 
         Connection conn = null;
         Statement stmt = null;
         ResultSet result = null;
-        Boolean validateCard = false;
-        String url = "jdbc:sqlite:Bank_DB.db";
+        Boolean validate = null;
 
+        String url = "jdbc:sqlite:Bank_DB.db";
 
         try {
             conn = DriverManager.getConnection(url);
             stmt = conn.createStatement();
             conn.setAutoCommit(false);
 
-
-            String valcardquery = "SELECT COUNT(card_number)\n" +
+            String valCardquery = "SELECT COUNT(card_number)\n" +
                     "FROM Customer\n" +
                     "WHERE card_number = ?;";
 
+            String valPinquery = "SELECT COUNT(card_pin)\n" +
+                    "FROM Customer\n" +
+                    "WHERE card_number = ?;";
 
-            validateCard = stmt.execute(valcardquery);
+            Boolean valCard = stmt.execute(valCardquery);
+            Boolean valPin = stmt.execute(valPinquery);
 
-            stmt.execute(valcardquery);
-            stmt.close();
-            conn.commit();
-            conn.close();
+            stmt.execute(valCardquery);
+            stmt.execute(valPinquery);
 
+            if (valCard && valPin) {
 
+                validate = true;
+                stmt.close();
+                conn.commit();
+                conn.close();
+
+            } else {
+                System.out.println("Your Card number or Pin number are incorrect.");
+                System.out.println("Please try again!");
+            }
 
         } catch(Exception e ) {
 
             System.err.println(e.getMessage());
         }
 
-        return validateCard;
-
+        return validate;
     }
 
 }

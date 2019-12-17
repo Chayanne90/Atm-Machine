@@ -2,23 +2,21 @@ package Atm;
 
 public class Atm extends Bank {
 
-    private boolean validate;
-
-    /* constructor */
+    /* Constructor */
     public Atm(String card_num, String card_pin) {
         super(card_num, card_pin);
     }
 
-
     public static void main (String [] args) {
 
-        Bank bankTLC = new Bank("3001", "5263");
+        Bank bankTLC = new Bank("1001", "1234");
 
-        final Boolean cardnumisthere = bankTLC.validateCard(bankTLC.getCard_num());
+        final boolean validate = bankTLC.validateCard(bankTLC.getCard_num(), bankTLC.getCard_pin());
 
-        System.out.print("teh card number exists? " + cardnumisthere);
+        if (validate) {
+            System.out.print("Your card Information exists in our Database!");
+        }
 
     }
-
 
 }
