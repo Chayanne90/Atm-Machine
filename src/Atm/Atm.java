@@ -9,11 +9,14 @@ public class Atm extends Bank {
         super(card_num, card_pin);
     }
 
+
     public static void main (String [] args) {
 
-        Bank bankTLC = new Bank("1002", "5263");
+        Bank bankTLC = new Bank("3001", "5263");
 
-        bankTLC.insertDB();
+        final Boolean cardnumisthere = bankTLC.validateCard(bankTLC.getCard_num());
+
+        System.out.print("teh card number exists? " + cardnumisthere);
 
     }
 

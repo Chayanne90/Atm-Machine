@@ -2,6 +2,7 @@ package Atm;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Bank {
@@ -50,7 +51,7 @@ public class Bank {
     //Each method will be connecting the the DB to verifiy the card  and get user account info
 
     /* Inserting data to DB this method is just for easy data entry!
-    be wrap in a group comment for when the application is running */
+    be wrap in a group comment for when the application is running
     public void insertDB() {
 
         Connection conn = null;
@@ -79,6 +80,45 @@ public class Bank {
         }
 
         System.out.println("Records created successfully");
+    }*/
+
+
+    public static Boolean validateCard(String card_num) {
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet result = null;
+        Boolean validateCard = false;
+        String url = "jdbc:sqlite:Bank_DB.db";
+
+
+        try {
+            conn = DriverManager.getConnection(url);
+            stmt = conn.createStatement();
+            conn.setAutoCommit(false);
+
+
+            String valcardquery = "SELECT COUNT(card_number)\n" +
+                    "FROM Customer\n" +
+                    "WHERE card_number = ?;";
+
+
+            validateCard = stmt.execute(valcardquery);
+
+            stmt.execute(valcardquery);
+            stmt.close();
+            conn.commit();
+            conn.close();
+
+
+
+        } catch(Exception e ) {
+
+            System.err.println(e.getMessage());
+        }
+
+        return validateCard;
+
     }
 
 }
