@@ -37,19 +37,20 @@ public class Bank {
     }
 
     // DB connection method This method will return connecting object.
-
     private Connection connection() {
 
         String url = "jdbc:sqlite:Bank_DB.db";
         Connection conn = null;
 
-        try{
+        try {
 
             conn = DriverManager.getConnection(url);
-        } catch (Exception e){
+
+        } catch (Exception e) {
+
             System.out.println(e.getMessage());
         }
-        System.out.println("Db connected...");
+
         return conn;
     }
 

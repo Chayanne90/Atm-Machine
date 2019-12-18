@@ -16,7 +16,7 @@ public class Atm extends Bank {
         if (validate) {
             System.out.print("Your card Information exists in our Database!");
         }
-        
+
     }
 
 }
