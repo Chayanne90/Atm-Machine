@@ -36,6 +36,23 @@ public class Bank {
         this.card_pin = card_pin;
     }
 
+    // DB connection method This method will return connecting object.
+
+    private Connection connection() {
+
+        String url = "jdbc:sqlite:Bank_DB.db";
+        Connection conn = null;
+
+        try{
+
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Db connected...");
+        return conn;
+    }
+
 
     //Each method will be connecting the the DB to verifiy the card and user account info
 
@@ -72,7 +89,7 @@ public class Bank {
     }*/
 
 
-    public static Boolean validateCard(String card_num, String card_pin) {
+    public static Boolean validateInfo(String card_num, String card_pin) {
 
         Connection conn = null;
         Statement stmt = null;
