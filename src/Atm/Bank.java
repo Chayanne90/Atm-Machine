@@ -5,6 +5,7 @@ import java.sql.*;
 public class Bank {
 
     private String customerName;
+    private String id;
     private String balance;
     private String card_num;
     private String card_pin;
@@ -42,7 +43,7 @@ public class Bank {
     public String getBalance(){
         return balance;
     }
-    
+
 
     /* Constructor */
     public Bank(String card_num, String card_pin) {
@@ -81,8 +82,7 @@ public class Bank {
                 "on a.customer_id = b.customer_id\n" +
                 "where a.card_number = ? and b.card_pin = ?";
 
-        try (Connection conn = this.connection();
-             PreparedStatement pstmt  = conn.prepareStatement(sql)){
+        try (Connection connection = this.connection(); PreparedStatement pstmt = connection.prepareStatement(sql)){
 
             /* Set the value */
             pstmt.setString(1, card_num);
@@ -91,12 +91,11 @@ public class Bank {
 
             /* getBoolean return true if the value from the query is 1 and 0 if the value is 0 */
             boolean valcard= rs.getBoolean("card_number");
-            boolean valpin =rs.getBoolean("card_pin");
-
+            boolean valpin = rs.getBoolean("card_pin");
 
             if (valcard && valpin){ validate = true;}
-            conn.close();
 
+            connection.close();
         } catch(Exception e ) {
 
             System.err.println(e.getMessage());
@@ -105,4 +104,22 @@ public class Bank {
         return validate;
     }
 
+    // Get customer_id and customer name
+    public final String getCustomerIDandName(String card_num, String card_pin) {
+        String sql = "SELECT  customer_id, customer_name\n" +
+                "FROM Customer\n" +
+                "WHERE card_number = ? and card_pin = ?";
+
+        try (Connection connection = this.connection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return customerName;
+    }
+
 }
+
+
