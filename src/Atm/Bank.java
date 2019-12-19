@@ -4,9 +4,22 @@ import java.sql.*;
 
 public class Bank {
 
-
+    private String customerName;
     private String card_num;
     private String card_pin;
+
+    // Setters
+    public void setCard_num(String card_num) {
+        this.card_num = card_num;
+    }
+
+    public void setCard_pin(String card_pin) {
+        this.card_pin = card_pin;
+    }
+
+    public void  setCustomername(String customerName){
+        this.customerName = customerName;
+    }
 
     // Getters
     public String getCard_num() {
@@ -17,14 +30,11 @@ public class Bank {
         return card_pin;
     }
 
-    // Setters
-    public void setCard_num(String card_num) {
-        this.card_num = card_num;
+    public String getCustomername(){
+        return customerName;
     }
 
-    public void setCard_pin(String card_pin) {
-        this.card_pin = card_pin;
-    }
+
 
     /* Constructor */
     public Bank(String card_num, String card_pin) {
