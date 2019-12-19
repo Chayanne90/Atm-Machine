@@ -5,6 +5,7 @@ import java.sql.*;
 public class Bank {
 
     private String customerName;
+    private String balance;
     private String card_num;
     private String card_pin;
 
@@ -21,6 +22,10 @@ public class Bank {
         this.customerName = customerName;
     }
 
+    public void setBalance(String balance){
+        this.balance = balance;
+    }
+
     // Getters
     public String getCard_num() {
         return card_num;
@@ -34,7 +39,10 @@ public class Bank {
         return customerName;
     }
 
-
+    public String getBalance(){
+        return balance;
+    }
+    
 
     /* Constructor */
     public Bank(String card_num, String card_pin) {
